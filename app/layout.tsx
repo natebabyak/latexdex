@@ -1,7 +1,7 @@
 import "./globals.css";
+import { MathJaxContext } from "better-react-mathjax";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
-import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "LaTeXdex",
@@ -19,14 +19,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <MathJaxContext>{children}</MathJaxContext>
         </ThemeProvider>
       </body>
-      <Script
-        id="MathJax-script"
-        async
-        src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
-      />
     </html>
   );
 }

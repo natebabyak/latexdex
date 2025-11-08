@@ -10,7 +10,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { Github } from "lucide-react";
+import { Github } from "@/components/icons/github";
+import { Separator } from "../ui/separator";
 
 export function Header() {
   return (
@@ -52,12 +53,15 @@ export function Header() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <Button asChild size="icon" title="GitHub" variant="ghost">
             <a href="https://github.com/natebabyak/latexdex" target="_blank">
               <Github />
             </a>
           </Button>
+          <div className="h-4">
+            <Separator orientation="vertical" />
+          </div>
           <ThemeToggle />
         </div>
       </div>

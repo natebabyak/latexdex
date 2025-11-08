@@ -16,7 +16,12 @@ export function ThemeToggle() {
   };
 
   return (
-    <Button onClick={toggleMode} size="icon" variant="ghost">
+    <Button
+      onClick={toggleMode}
+      size="icon"
+      title="Toggle Theme"
+      variant="ghost"
+    >
       <Sun className="scale-100 rotate-0 transition-transform! dark:scale-0 dark:rotate-90" />
       <Moon className="absolute scale-0 rotate-90 transition-transform! dark:scale-100 dark:rotate-0" />
     </Button>
