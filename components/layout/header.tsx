@@ -9,9 +9,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { Github } from "@/components/icons/github";
-import { Separator } from "../ui/separator";
+import { Latexdex } from "@/components/icons/latexdex";
 
 export function Header() {
   return (
@@ -24,7 +22,9 @@ export function Header() {
                 asChild
                 className={navigationMenuTriggerStyle()}
               >
-                <Link href="/">LaTeXdex</Link>
+                <Link href="/">
+                  <Latexdex />
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -54,15 +54,12 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="flex items-center gap-2">
-          <Button asChild size="icon" title="GitHub" variant="ghost">
-            <a href="https://github.com/natebabyak/latexdex" target="_blank">
-              <Github />
-            </a>
+          <Button asChild variant="outline">
+            <Link href="/sign-in">Sign In</Link>
           </Button>
-          <div className="h-4">
-            <Separator orientation="vertical" />
-          </div>
-          <ThemeToggle />
+          <Button asChild>
+            <Link href="/sign-up">Sign Up</Link>
+          </Button>
         </div>
       </div>
     </header>
