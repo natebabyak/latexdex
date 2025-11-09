@@ -1,4 +1,3 @@
-import { Formula } from "@/components/formula";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,6 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { Separator } from "@/components/ui/separator";
 import { ArrowRight, Search } from "lucide-react";
 
 export default function Home() {
