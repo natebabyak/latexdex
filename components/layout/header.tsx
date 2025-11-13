@@ -14,7 +14,7 @@ import { Latexdex } from "@/components/icons/latexdex";
 export function Header() {
   return (
     <header className="w-full p-4">
-      <div className="flex items-center justify-between">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 xl:px-0">
         <NavigationMenu viewport={true}>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -54,11 +54,11 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="flex items-center gap-2">
-          <Button asChild variant="outline">
-            <Link href="/sign-in">Sign In</Link>
+          <Button asChild variant="ghost">
+            <Link href="/sign-in">Sign in</Link>
           </Button>
           <Button asChild>
-            <Link href="/sign-up">Sign Up</Link>
+            <Link href="/sign-up">Sign up</Link>
           </Button>
         </div>
       </div>
