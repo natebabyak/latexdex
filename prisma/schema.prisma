@@ -12,7 +12,7 @@ model User {
   id            Int       @id @default(autoincrement())
   email         String    @unique
   name          String?
-  posts         Post[]
+  posts         Entry[]
   emailVerified Boolean   @default(false)
   image         String?
   createdAt     DateTime  @default(now())
@@ -23,13 +23,14 @@ model User {
   @@map("user")
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
+model Entry {
+  id        Int      @id @default(autoincrement())
   title     String
-  content   String?
-  published Boolean @default(false)
+  content   String
   authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Session {
@@ -62,6 +63,7 @@ model Account {
   password              String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
+  entryId               String?
 
   @@map("account")
 }
