@@ -9,7 +9,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Latexdex } from "@/components/icons/latexdex";
 
 export function Header() {
   return (
@@ -22,33 +21,23 @@ export function Header() {
                 asChild
                 className={navigationMenuTriggerStyle()}
               >
-                <Link href="/">
-                  <Latexdex />
-                </Link>
+                <Link href="/">LaTeXdex</Link>
               </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Formulas</NavigationMenuTrigger>
-              <NavigationMenuContent></NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Symbols</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]"></ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Templates</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]"></ul>
-              </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink
                 asChild
                 className={navigationMenuTriggerStyle()}
               >
-                <Link href="/contribute">Contribute</Link>
+                <Link href="/search">Search</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={navigationMenuTriggerStyle()}
+              >
+                <Link href="/pricing">Pricing</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>

@@ -18,4 +18,4 @@ The platform for LaTeX formulas, symbols, templates, and everything in between
 
 ## License
 
-[MIT](/LICENSE.txt)
+[MIT](LICENSE.txt)
