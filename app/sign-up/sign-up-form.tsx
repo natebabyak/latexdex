@@ -21,6 +21,7 @@ import {
 import { useState } from "react";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -38,6 +39,8 @@ const schema = z.object({
 });
 
 export function SignUpForm() {
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
@@ -58,7 +61,11 @@ export function SignUpForm() {
       name: values.name,
       email: values.email,
       password: values.password,
-      callbackURL: "/sign-in",
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/sign-in");
+        },
+      },
     });
   }
 
