@@ -1,156 +1,36 @@
-"use client";
-
-import { authClient } from "@/lib/auth-client";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { Eye, EyeOff } from "lucide-react";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Github } from "@/components/icons/github";
-import { Google } from "@/components/icons/google";
-import { Input } from "@/components/ui/input";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "@/components/ui/input-group";
+import { GithubButton } from "@/components/github-button";
+import { GoogleButton } from "@/components/google-button";
 import Link from "next/link";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { Metadata } from "next";
 import { Separator } from "@/components/ui/separator";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { SignInForm } from "./sign-in-form";
 
-const formSchema = z.object({
-  email: z.email(),
-  password: z.string(),
-});
+export const metadata: Metadata = {
+  title: "Sign in | LaTeXdex",
+  description: "Sign in to your account",
+};
 
-export default function SignUp() {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
-
+export default function SignIn() {
   return (
-    <Card className="mx-auto w-full max-w-sm">
-      <CardHeader>
-        <CardTitle>Sign in to LaTeXdex</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-col gap-4">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="you@domain.com"
-                        type="email"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="flex items-center justify-between">
-                      <FormLabel>Password</FormLabel>
-                      <Link
-                        href="/"
-                        className="text-muted-foreground text-xs underline-offset-4 hover:underline"
-                      >
-                        Forgot password?
-                      </Link>
-                    </div>
-                    <FormControl>
-                      <InputGroup>
-                        <InputGroupInput
-                          {...field}
-                          placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                          type={showPassword ? "text" : "password"}
-                        />
-                        <InputGroupAddon align="inline-end">
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <InputGroupButton
-                                onClick={toggleShowPassword}
-                                size="icon-xs"
-                                variant="outline"
-                              >
-                                <EyeOff
-                                  className={cn(
-                                    "scale-100 transition-transform",
-                                    showPassword && "scale-0",
-                                  )}
-                                />
-                                <Eye
-                                  className={cn(
-                                    "absolute scale-0 transition-transform",
-                                    showPassword && "scale-100",
-                                  )}
-                                />
-                              </InputGroupButton>
-                            </TooltipTrigger>
-                            <TooltipContent side="top">
-                              <p>
-                                {showPassword
-                                  ? "Hide password"
-                                  : "Show password"}
-                              </p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </InputGroupAddon>
-                      </InputGroup>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Sign in</Button>
-            </form>
-          </Form>
+    <main className="flex h-dvh items-center">
+      <Card className="mx-auto w-full max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl font-normal">Welcome back</CardTitle>
+          <CardDescription className="text-xs">
+            Sign in to your account
+          </CardDescription>
+        </CardHeader>
+        <Separator />
+        <CardContent className="flex flex-col gap-4">
+          <SignInForm />
           <div className="relative">
             <Separator />
             <span className="bg-card text-muted-foreground absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 text-xs font-medium">
@@ -158,39 +38,23 @@ export default function SignUp() {
             </span>
           </div>
           <div className="flex flex-col gap-2">
-            <Button
-              onClick={() => {
-                authClient.signIn.social({
-                  provider: "github",
-                });
-              }}
-              variant="outline"
-            >
-              <Github />
-              Continue with GitHub
-            </Button>
-            <Button
-              onClick={() => {
-                authClient.signIn.social({
-                  provider: "google",
-                });
-              }}
-              variant="outline"
-            >
-              <Google />
-              Continue with Google
-            </Button>
+            <GithubButton />
+            <GoogleButton />
           </div>
-        </div>
-      </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <p className="text-muted-foreground text-xs">
-          Don&apos;t have an account?{" "}
-          <Link href="/sign-up" className="underline-offset-4 hover:underline">
-            Sign up{" "}
-          </Link>
-        </p>
-      </CardFooter>
-    </Card>
+        </CardContent>
+        <Separator />
+        <CardFooter className="flex-col gap-2">
+          <p className="text-muted-foreground text-xs">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/sign-up"
+              className="underline-offset-4 hover:underline"
+            >
+              Sign up now{" "}
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
+    </main>
   );
 }
