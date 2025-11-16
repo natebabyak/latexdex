@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
@@ -41,7 +40,6 @@ export function SignInForm() {
     defaultValues: {
       email: "",
       password: "",
-      rememberMe: false,
     },
   });
 
@@ -49,7 +47,7 @@ export function SignInForm() {
     await authClient.signIn.email({
       email: values.email,
       password: values.password,
-      rememberMe: values.rememberMe,
+      rememberMe: true,
       callbackURL: "/",
     });
   }
@@ -115,27 +113,6 @@ export function SignInForm() {
                   </InputGroupButton>
                 </InputGroupAddon>
               </InputGroup>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          name="rememberMe"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid} orientation="horizontal">
-              <Checkbox
-                checked={field.value}
-                id="sign-in-form-remember-me"
-                name={field.name}
-                onCheckedChange={field.onChange}
-              />
-              <FieldLabel
-                htmlFor="sign-in-form-remember-me"
-                className="font-normal"
-              >
-                Remember me
-              </FieldLabel>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
