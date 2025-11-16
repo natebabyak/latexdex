@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 
-export function NewButton() {
+export function CreateButton() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ export function NewButton() {
       <DialogTrigger>
         <Button>
           <PlusCircle />
-          Create New
+          Create
         </Button>
       </DialogTrigger>
       <DialogContent>

@@ -12,6 +12,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import prisma from "@/lib/prisma";
 import { SearchInput } from "./search-input";
+import { Entry } from "./entry";
 
 export default async function Page() {
   const allEntries = await prisma.entry.findMany();
