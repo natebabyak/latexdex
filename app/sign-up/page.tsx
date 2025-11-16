@@ -14,8 +14,8 @@ import { Separator } from "@/components/ui/separator";
 import { SignUpForm } from "./sign-up-form";
 
 export const metadata: Metadata = {
-  title: "Sign in | LaTeXdex",
-  description: "Sign in to your account",
+  title: "Sign up | LaTeXdex",
+  description: "Create a new account",
 };
 
 export default function SignUp() {
@@ -23,7 +23,7 @@ export default function SignUp() {
     <main className="flex h-dvh items-center">
       <Card className="mx-auto w-full max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl font-normal">Get Started</CardTitle>
+          <CardTitle className="text-2xl font-normal">Get started</CardTitle>
           <CardDescription className="text-xs">
             Create a new account
           </CardDescription>
