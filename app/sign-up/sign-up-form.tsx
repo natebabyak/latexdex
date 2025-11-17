@@ -7,6 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Eye, EyeOff } from "lucide-react";
 import {
   Field,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -90,6 +91,9 @@ export function SignUpForm() {
                 placeholder="John Doe"
                 type="text"
               />
+              <FieldDescription className="text-xs">
+                This is your display name
+              </FieldDescription>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
