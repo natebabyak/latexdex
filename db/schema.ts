@@ -66,7 +66,7 @@ export const verification = pgTable("verification", {
     .notNull(),
 });
 
-export const post = pgTable("post", {
+export const entry = pgTable("entry", {
   id: text("id").primaryKey(),
   title: varchar({ length: 255 }).notNull(),
   description: text("description"),
@@ -80,4 +80,4 @@ export type SelectUser = typeof user.$inferSelect;
 export type SelectSession = typeof session.$inferSelect;
 export type SelectAccount = typeof account.$inferSelect;
 export type SelectVerification = typeof verification.$inferSelect;
-export type SelectPost = typeof post.$inferSelect;
+export type SelectEntry = typeof entry.$inferSelect;
