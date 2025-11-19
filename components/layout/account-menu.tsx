@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { headers } from "next/headers";
 import Link from "next/link";
-import { LogOut } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SignOutButton } from "./sign-out-button";
 
 export async function AccountMenu() {
   const session = await auth.api.getSession({
@@ -56,11 +56,7 @@ export async function AccountMenu() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOut />
-          Sign out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        <SignOutButton />
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (

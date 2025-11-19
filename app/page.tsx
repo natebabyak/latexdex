@@ -17,10 +17,10 @@ export default function Home() {
       <main>
         <article>
           <div className="grid gap-2 text-center">
-            <h1 className="text-7xl font-bold">LaTeXdex</h1>
-            <p className="text-muted-foreground text-lg">
-              The free and open-source LaTeX database
-            </p>
+            <h1 className="text-5xl font-semibold text-balance">
+              The free and open-source LaTeX database.
+            </h1>
+            <p className="text-muted-foreground text-lg">LaTeXdex</p>
           </div>
           <div className="mx-auto grid gap-2">
             <InputGroup className="mx-auto w-full max-w-sm">
@@ -37,7 +37,8 @@ export default function Home() {
             </InputGroup>
           </div>
           <Separator />
-
+          <h2>Scientific Calculator</h2>
+          <p>An </p>
           <Separator />
         </article>
       </main>
