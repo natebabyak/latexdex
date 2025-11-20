@@ -17,10 +17,13 @@ export default function Home() {
       <main>
         <article>
           <div className="grid gap-2 text-center">
-            <h1 className="text-5xl font-semibold text-balance">
+            <h1 className="line-clamp-2 text-5xl font-semibold text-balance">
               The free and open-source LaTeX database.
             </h1>
-            <p className="text-muted-foreground text-lg">LaTeXdex</p>
+            <p className="text-muted-foreground line-clamp-3 text-balance">
+              LaTeXdex is a community-driven repository of snippets and
+              templates to simplify your LaTeX needs
+            </p>
           </div>
           <div className="mx-auto grid gap-2">
             <InputGroup className="mx-auto w-full max-w-sm">
