@@ -124,7 +124,6 @@ export function NewForm() {
                       </InputGroupButton>
                     </InputGroupAddon>
                   </InputGroup>
-
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
