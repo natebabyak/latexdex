@@ -1,56 +1,42 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
 import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+export const metadata: Metadata = {
+  title: "Pricing | LaTeXdex",
+};
 
 export default function Page() {
   return (
     <>
       <Header />
-      <main>
-        <h1>Pricing</h1>
-        <div className="grid grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardTitle>Guest</CardTitle>
-              <CardDescription>Full access to public</CardDescription>
-              <CardAction>a</CardAction>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Free</CardTitle>
-              <CardDescription>Share, save, modify, and more.</CardDescription>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader>
-              <div className="flex flex-col gap-2">
-                <CardTitle className="text-center text-2xl font-normal">
-                  Pro
-                </CardTitle>
-                <CardDescription></CardDescription>
-              </div>
-            </CardHeader>
-            <Separator />
-            <CardContent></CardContent>
-            <Separator />
-            <CardFooter>
-              <CardAction className="w-full">
-                <Button className="w-full">Get Pro</Button>
-              </CardAction>
-            </CardFooter>
-          </Card>
-        </div>
+      <main className="min-h-dvh pt-[68px]">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Invoice</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Method</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="font-medium">INV001</TableCell>
+              <TableCell>Paid</TableCell>
+              <TableCell>Credit Card</TableCell>
+              <TableCell className="text-right">$250.00</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </main>
       <Footer />
     </>

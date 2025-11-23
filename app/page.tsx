@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main>
+      <main className="pt-[68px]">
         <article>
           <div className="grid gap-2 text-center">
             <h1 className="line-clamp-2 text-5xl font-semibold text-balance">

@@ -6,7 +6,9 @@ export default function Page() {
   return (
     <>
       <Header />
-      <NewForm />
+      <main className="pt-[68px]">
+        <NewForm />
+      </main>
       <Footer />
     </>
   );

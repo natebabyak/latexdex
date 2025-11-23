@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { AccountMenu } from "./account-menu";
-import { Layers } from "lucide-react";
-import { NavMenu } from "./nav-menu";
+import { Layers, Plus, PlusCircle } from "lucide-react";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { Button } from "@/components/ui/button";
 
 export function Header() {
   return (
@@ -11,7 +18,40 @@ export function Header() {
           <Link href="/">
             <Layers />
           </Link>
-          <NavMenu />
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={navigationMenuTriggerStyle()}
+                >
+                  <Link href="/search">Database</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={navigationMenuTriggerStyle()}
+                >
+                  <Link href="/editor">Tools</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={navigationMenuTriggerStyle()}
+                >
+                  <Link href="/pricing">Pricing</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          <Button asChild>
+            <Link href="/new">
+              <Plus />
+              Create New
+            </Link>
+          </Button>
         </div>
         <AccountMenu />
       </div>

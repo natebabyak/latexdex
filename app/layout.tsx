@@ -1,5 +1,4 @@
 import "./globals.css";
-import { MathJaxContext } from "better-react-mathjax";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -19,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <MathJaxContext>{children}</MathJaxContext>
+          {children}
         </ThemeProvider>
       </body>
     </html>
