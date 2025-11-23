@@ -8,26 +8,39 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SignOutButton } from "./sign-out-button";
+import { Palette, Star, User2 } from "lucide-react";
 
 export async function AccountMenu() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  return session ? (
+  if (!session) {
+    return (
+      <div className="flex items-center gap-2">
+        <Button asChild variant="outline">
+          <Link href="/sign-in">Sign in</Link>
+        </Button>
+        <Button asChild>
+          <Link href="/sign-up">Sign up</Link>
+        </Button>
+      </div>
+    );
+  }
+
+  return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
-          <AvatarImage src={session.user.image || undefined} />
+          <AvatarImage src={session.user?.image || undefined} />
           <AvatarFallback asChild>
-            <Skeleton className="size-8 rounded-full" />
+            <Skeleton />
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -36,37 +49,41 @@ export async function AccountMenu() {
         side="bottom"
         className="w-full max-w-sm"
       >
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          <div className="flex items-center gap-2">
+            <Avatar>
+              <AvatarImage src={session.user?.image || undefined} />
+              <AvatarFallback asChild>
+                <Skeleton />
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="text-sm font-medium">
+                {session.user.name || "User"}
+              </span>
+              <span className="text-muted-foreground text-xs">
+                {session.user.email || ""}
+              </span>
+            </div>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            <User2 /> Profile
           </DropdownMenuItem>
           <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            <Star />
+            Stars
           </DropdownMenuItem>
           <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Keyboard shortcuts
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+            <Palette />
+            Appearance
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <SignOutButton />
       </DropdownMenuContent>
     </DropdownMenu>
-  ) : (
-    <div className="flex items-center gap-2">
-      <Button asChild variant="ghost">
-        <Link href="/sign-in">Sign in</Link>
-      </Button>
-      <Button asChild>
-        <Link href="/sign-up">Sign up</Link>
-      </Button>
-    </div>
   );
 }
