@@ -7,7 +7,9 @@ export default function Page() {
     <>
       <Header />
       <main className="pt-[68px]">
-        <NewForm />
+        <div className="max-w-5xl px-4 lg:px-0">
+          <NewForm />
+        </div>
       </main>
       <Footer />
     </>

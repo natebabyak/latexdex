@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { AccountMenu } from "./account-menu";
-import { Layers, Plus, PlusCircle } from "lucide-react";
+import { Layers, Plus } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -33,23 +33,15 @@ export function Header() {
                   asChild
                   className={navigationMenuTriggerStyle()}
                 >
-                  <Link href="/editor">Tools</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  asChild
-                  className={navigationMenuTriggerStyle()}
-                >
                   <Link href="/pricing">Pricing</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          <Button asChild>
+          <Button asChild className="bg-primary!">
             <Link href="/new">
               <Plus />
-              Create New
+              Create
             </Link>
           </Button>
         </div>

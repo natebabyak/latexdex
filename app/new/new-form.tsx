@@ -25,9 +25,21 @@ import { Latex } from "@/components/latex";
 import { TagsInput } from "./tags-input";
 
 const schema = z.object({
-  title: z.string().min(1, "Title is required"),
-  content: z.string().min(1, "Content is required"),
-  tags: z.array(z.string()).min(1).max(15, ""),
+  title: z
+    .string()
+    .min(1, "Title is required")
+    .max(100, "Title is too long (max 100 characters)"),
+  description: z
+    .string()
+    .max(500, "Description is too long (max 500 characters)"),
+  content: z
+    .string()
+    .min(1, "Content is required")
+    .max(2500, "Content is too long (max 2500 characters)"),
+  tags: z
+    .array(z.string())
+    .min(1, "At least 1 tag is required")
+    .max(20, "Too many tags (max 20 tags)"),
 });
 
 export function NewForm() {
@@ -35,6 +47,7 @@ export function NewForm() {
     resolver: zodResolver(schema),
     defaultValues: {
       title: "",
+      description: "",
       content: "",
       tags: [],
     },
@@ -53,8 +66,11 @@ export function NewForm() {
     >
       <FieldGroup className="grid gap-4">
         <FieldSet>
-          <FieldLegend>New Entry</FieldLegend>
-          <FieldDescription>Description</FieldDescription>
+          <FieldLegend>Create New</FieldLegend>
+          <FieldDescription>
+            Create a new database entry by providing a name, its content, and at
+            least 1 tag
+          </FieldDescription>
           <Controller
             name="title"
             control={form.control}
