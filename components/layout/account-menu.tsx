@@ -14,7 +14,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SignOutButton } from "./sign-out-button";
-import { Palette, Star, User2 } from "lucide-react";
+import { FileUp, FolderUp, Palette, Settings, Star, User2 } from "lucide-react";
 
 export async function AccountMenu() {
   const session = await auth.api.getSession({
@@ -58,23 +58,37 @@ export async function AccountMenu() {
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <span className="text-sm font-medium">
-                {session.user.name || "User"}
-              </span>
+              <span className="text-sm font-medium">{session.user.name}</span>
               <span className="text-muted-foreground text-xs">
-                {session.user.email || ""}
+                {session.user.email}
               </span>
             </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <DropdownMenuItem asChild>
+            <Link href={`/profile/${session.user.id}`}>
+              <User2 />
+              Profile
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>
-            <User2 /> Profile
+            <FileUp />
+            Entries
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <FolderUp />
+            Collections
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Star />
             Stars
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <Settings />
+            Settings
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Palette />
