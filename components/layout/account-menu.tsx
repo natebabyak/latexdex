@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth";
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,35 +10,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { headers } from "next/headers";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
-import { SignOutButton } from "./sign-out-button";
-import { FileUp, FolderUp, Palette, Settings, Star, User2 } from "lucide-react";
+import {
+  FileHeart,
+  FileUp,
+  FolderHeart,
+  FolderUp,
+  LogOut,
+  Moon,
+  Settings,
+  Sun,
+  User2,
+} from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
+import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
-export async function AccountMenu() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+export function AccountMenu() {
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const { data: session } = authClient.useSession();
+  const { setTheme, theme } = useTheme();
 
-  if (!session) {
-    return (
-      <div className="flex items-center gap-2">
-        <Button asChild variant="outline">
-          <Link href="/sign-in">Sign in</Link>
-        </Button>
-        <Button asChild>
-          <Link href="/sign-up">Sign up</Link>
-        </Button>
-      </div>
-    );
-  }
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  const signOut = async () => {
+    await authClient.signOut();
+    router.refresh();
+  };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
-          <AvatarImage src={session.user?.image || undefined} />
+          <AvatarImage src={session?.user.image || undefined} />
           <AvatarFallback asChild>
             <Skeleton />
           </AvatarFallback>
@@ -52,15 +61,15 @@ export async function AccountMenu() {
         <DropdownMenuLabel>
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src={session.user?.image || undefined} />
+              <AvatarImage src={session?.user.image || undefined} />
               <AvatarFallback asChild>
                 <Skeleton />
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <span className="text-sm font-medium">{session.user.name}</span>
+              <span className="text-sm font-medium">{session?.user.name}</span>
               <span className="text-muted-foreground text-xs">
-                {session.user.email}
+                {session?.user.email}
               </span>
             </div>
           </div>
@@ -68,35 +77,43 @@ export async function AccountMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={`/profile/${session.user.id}`}>
+            <Link href={`/profile/${session?.user.id}`}>
               <User2 />
               Profile
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <FileUp />
-            Entries
+            My Entries
           </DropdownMenuItem>
           <DropdownMenuItem>
             <FolderUp />
-            Collections
+            My Collections
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Star />
-            Stars
+            <FileHeart />
+            Saved Entries
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <FolderHeart />
+            Saved Collections
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Settings />
             Settings
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Palette />
-            Appearance
+          <DropdownMenuItem onClick={toggleTheme}>
+            <Sun className="scale-100 rotate-0 dark:scale-0 dark:rotate-90" />
+            <Moon className="absolute scale-0 rotate-90 dark:scale-100 dark:rotate-0" />
+            Toggle theme
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <SignOutButton />
+        <DropdownMenuItem onClick={signOut}>
+          <LogOut />
+          Sign out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
