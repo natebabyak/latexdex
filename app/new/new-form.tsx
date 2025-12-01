@@ -1,6 +1,8 @@
 "use client";
 
+import CodeMirror, { keymap } from "@uiw/react-codemirror";
 import { Button } from "@/components/ui/button";
+import { autocompletion, completionKeymap, latex } from "codemirror-lang-latex";
 import {
   Field,
   FieldDescription,
@@ -20,9 +22,12 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { Editor } from "@/components/editor";
-import { Latex } from "@/components/latex";
 import { TagsInput } from "./tags-input";
+import { BlockMath } from "react-katex";
+import { useTheme } from "next-themes";
+import { db } from "@/db/drizzle";
+import { entry, NewEntry } from "@/db/schema";
+import { authClient } from "@/lib/auth-client";
 
 const schema = z.object({
   title: z
@@ -43,6 +48,9 @@ const schema = z.object({
 });
 
 export function NewForm() {
+  const { theme } = useTheme();
+  const { data: session } = authClient.useSession();
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -54,8 +62,17 @@ export function NewForm() {
   });
 
   async function onSubmit(values: z.infer<typeof schema>) {
-    console.log("hi");
-    console.log(values);
+    if (!session) return;
+
+    const newEntry: NewEntry = {
+      id: crypto.randomUUID(),
+      title: values.title,
+      description: values.description,
+      content: values.content,
+      userId: session.user.id,
+    };
+
+    await db.insert(entry).values(newEntry).returning({ id: entry.id });
   }
 
   return (
@@ -97,14 +114,24 @@ export function NewForm() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor="new-form-content">Content</FieldLabel>
-                <div className="min-h-32 rounded-2xl border">
+                <div className="min-h-32 border">
                   <ResizablePanelGroup direction="horizontal">
                     <ResizablePanel defaultSize={50}>
-                      <Editor {...field} />
+                      <CodeMirror
+                        extensions={[
+                          latex(),
+                          autocompletion(),
+                          keymap.of(completionKeymap),
+                        ]}
+                        minHeight="200px"
+                        onChange={field.onChange}
+                        theme={theme === "dark" ? "dark" : "light"}
+                        value={field.value}
+                      />
                     </ResizablePanel>
-                    <ResizableHandle withHandle />
+                    <ResizableHandle />
                     <ResizablePanel defaultSize={50}>
-                      <Latex value={field.value} />
+                      <BlockMath math={field.value} />
                     </ResizablePanel>
                   </ResizablePanelGroup>
                 </div>

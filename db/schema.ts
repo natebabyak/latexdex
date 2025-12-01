@@ -1,6 +1,7 @@
 import {
   boolean,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   varchar,
@@ -66,18 +67,44 @@ export const verification = pgTable("verification", {
     .notNull(),
 });
 
+export const tag = pgTable("tag", {
+  id: text("id").primaryKey(),
+  name: varchar("name", { length: 100 }).notNull().unique(),
+});
+
 export const entry = pgTable("entry", {
   id: text("id").primaryKey(),
-  title: varchar({ length: 255 }).notNull(),
-  description: text("description"),
-  content: text("content"),
+  title: varchar("title", { length: 200 }).notNull(),
+  description: varchar("description", { length: 1000 }),
+  content: text("content").notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
 });
 
-export type SelectUser = typeof user.$inferSelect;
-export type SelectSession = typeof session.$inferSelect;
-export type SelectAccount = typeof account.$inferSelect;
-export type SelectVerification = typeof verification.$inferSelect;
-export type SelectEntry = typeof entry.$inferSelect;
+export const entryTags = pgTable(
+  "entry_tags",
+  {
+    entryId: text("entry_id")
+      .notNull()
+      .references(() => entry.id, { onDelete: "cascade" }),
+    tagId: text("tag_id")
+      .notNull()
+      .references(() => tag.id, { onDelete: "cascade" }),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.entryId, table.tagId] }),
+  }),
+);
+
+export type NewUser = typeof user.$inferInsert;
+export type NewSession = typeof session.$inferInsert;
+export type NewAccount = typeof account.$inferInsert;
+export type NewVerification = typeof verification.$inferInsert;
+export type NewEntry = typeof entry.$inferInsert;
+
+export type User = typeof user.$inferSelect;
+export type Session = typeof session.$inferSelect;
+export type Account = typeof account.$inferSelect;
+export type Verification = typeof verification.$inferSelect;
+export type Entry = typeof entry.$inferSelect;
