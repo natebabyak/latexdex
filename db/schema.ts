@@ -1,5 +1,7 @@
 import {
   boolean,
+  index,
+  integer,
   pgTable,
   primaryKey,
   text,
@@ -67,20 +69,51 @@ export const verification = pgTable("verification", {
     .notNull(),
 });
 
-export const tag = pgTable("tag", {
-  id: text("id").primaryKey(),
-  name: varchar("name", { length: 100 }).notNull().unique(),
-});
+export const tag = pgTable(
+  "tag",
+  {
+    id: text("id").primaryKey(),
+    title: varchar("title", { length: 50 }).notNull().unique(),
+    useCount: integer("use_count").notNull().default(0),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("tag_title_idx").on(table.title),
+    index("tag_use_count_idx").on(table.useCount),
+  ],
+);
 
-export const entry = pgTable("entry", {
-  id: text("id").primaryKey(),
-  title: varchar("title", { length: 200 }).notNull(),
-  description: varchar("description", { length: 1000 }),
-  content: text("content").notNull(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-});
+export const entry = pgTable(
+  "entry",
+  {
+    id: text("id").primaryKey(),
+    title: varchar("title", { length: 100 }).notNull(),
+    description: varchar("description", { length: 500 }),
+    content: text("content").notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    copyCount: integer("copy_count").notNull().default(0),
+    saveCount: integer("save_count").notNull().default(0),
+    viewCount: integer("view_count").notNull().default(0),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("entry_title_idx").on(table.title),
+    index("entry_user_id_idx").on(table.userId),
+    index("entry_copy_count_idx").on(table.copyCount),
+    index("entry_save_count_idx").on(table.saveCount),
+    index("entry_view_count_idx").on(table.viewCount),
+  ],
+);
 
 export const entryTags = pgTable(
   "entry_tags",
@@ -92,19 +125,28 @@ export const entryTags = pgTable(
       .notNull()
       .references(() => tag.id, { onDelete: "cascade" }),
   },
-  (table) => ({
-    pk: primaryKey({ columns: [table.entryId, table.tagId] }),
-  }),
+  (table) => [
+    primaryKey({ columns: [table.entryId, table.tagId] }),
+    index("entry_tags_tag_id_idx").on(table.tagId),
+  ],
 );
 
-export type NewUser = typeof user.$inferInsert;
-export type NewSession = typeof session.$inferInsert;
-export type NewAccount = typeof account.$inferInsert;
-export type NewVerification = typeof verification.$inferInsert;
-export type NewEntry = typeof entry.$inferInsert;
+export const savedEntries = pgTable(
+  "saved_entries",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    entryId: text("entry_id")
+      .notNull()
+      .references(() => entry.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.entryId] }),
+    index("saved_entries_user_id_idx").on(table.userId),
+  ],
+);
 
-export type User = typeof user.$inferSelect;
-export type Session = typeof session.$inferSelect;
-export type Account = typeof account.$inferSelect;
-export type Verification = typeof verification.$inferSelect;
-export type Entry = typeof entry.$inferSelect;
+export type NewEntry = typeof entry.$inferInsert;
+export type NewSavedEntry = typeof savedEntries.$inferInsert;
