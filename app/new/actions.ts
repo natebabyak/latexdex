@@ -5,17 +5,7 @@ import { entry, NewEntry } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import z from "zod";
-
-export const schema = z.object({
-  title: z
-    .string()
-    .min(1, "Title is required")
-    .max(100, "Title is too long (max 100 characters)"),
-  description: z
-    .string()
-    .max(500, "Description is too long (max 500 characters)"),
-  content: z.string().min(1, "Content is required"),
-});
+import { schema } from "./schema";
 
 export async function createEntry(values: z.infer<typeof schema>) {
   const validatedFields = schema.safeParse({

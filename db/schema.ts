@@ -150,3 +150,4 @@ export const savedEntries = pgTable(
 
 export type NewEntry = typeof entry.$inferInsert;
 export type NewSavedEntry = typeof savedEntries.$inferInsert;
+export type Entry = typeof entry.$inferSelect;

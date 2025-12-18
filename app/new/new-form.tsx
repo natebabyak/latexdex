@@ -24,7 +24,8 @@ import {
 } from "@/components/ui/resizable";
 import { BlockMath } from "react-katex";
 import { useTheme } from "next-themes";
-import { createEntry, schema } from "./actions";
+import { createEntry } from "./actions";
+import { schema } from "./schema";
 
 export function NewForm() {
   const { theme } = useTheme();

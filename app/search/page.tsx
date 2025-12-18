@@ -17,43 +17,49 @@ import Link from "next/link";
 import { entry } from "@/db/schema";
 
 export default async function Page() {
-  const allPosts = await db.select().from(entry);
+  const allEntries = await db.select().from(entry);
 
   return (
     <>
       <Header />
-      <SearchInput />
-      {allPosts.length > 0 ? (
-        allPosts.map((post, i) => <Post key={i} post={post} />)
-      ) : (
-        <Empty>
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <Database />
-            </EmptyMedia>
-            <EmptyTitle>No Entries Found</EmptyTitle>
-            <EmptyDescription>
-              Try refining your search or create a new entry.
-            </EmptyDescription>
-          </EmptyHeader>
-          <EmptyContent>
-            <div className="flex gap-2">
-              <Button asChild>
-                <Link href="/new">
-                  <Plus />
-                  Create Entry
-                </Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/search">
-                  <RotateCcw />
-                  New Search
-                </Link>
-              </Button>
-            </div>
-          </EmptyContent>
-        </Empty>
-      )}
+      <main className="pt-[68px]">
+        <SearchInput />
+        {allEntries.length > 0 ? (
+          <div className="grid gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {allEntries.map((entry, i) => (
+              <Post key={i} entry={entry} />
+            ))}
+          </div>
+        ) : (
+          <Empty>
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <Database />
+              </EmptyMedia>
+              <EmptyTitle>No Entries Found</EmptyTitle>
+              <EmptyDescription>
+                Try refining your search or create a new entry.
+              </EmptyDescription>
+            </EmptyHeader>
+            <EmptyContent>
+              <div className="flex gap-2">
+                <Button asChild>
+                  <Link href="/new">
+                    <Plus />
+                    Create Entry
+                  </Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href="/search">
+                    <RotateCcw />
+                    New Search
+                  </Link>
+                </Button>
+              </div>
+            </EmptyContent>
+          </Empty>
+        )}
+      </main>
       <Footer />
     </>
   );

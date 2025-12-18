@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -7,30 +7,30 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { SelectPost } from "@/db/schema";
+import { Entry } from "@/db/schema";
+import { BlockMath } from "react-katex";
 
-interface PostProps {
-  post: SelectPost;
-}
-
-export function Post({ post }: PostProps) {
+export function Post({ entry }: { entry: Entry }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card>
+        <Card className="cursor-pointer transition-transform hover:-translate-y-0.5 hover:shadow-md">
           <CardHeader>
-            <CardTitle>{post.title}</CardTitle>
+            <CardTitle>{entry.title}</CardTitle>
           </CardHeader>
+          <CardContent>
+            <BlockMath>{entry.content}</BlockMath>
+          </CardContent>
         </Card>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle>{entry.title}</DialogTitle>
+          <DialogDescription>{entry.description}</DialogDescription>
         </DialogHeader>
+        <div>
+          <BlockMath>{entry.content}</BlockMath>
+        </div>
       </DialogContent>
     </Dialog>
   );
