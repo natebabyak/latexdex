@@ -39,12 +39,12 @@ export async function Header() {
                   asChild
                   className={navigationMenuTriggerStyle()}
                 >
-                  <Link href="/pricing">Pricing</Link>
+                  <Link href="/upgrade">Upgrade</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          <Button asChild className="bg-primary!">
+          <Button asChild>
             <Link href="/new">
               <Plus />
               Create
