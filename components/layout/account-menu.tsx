@@ -8,17 +8,19 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  FileHeart,
-  FileUp,
-  FolderUp,
-  Heart,
+  Bookmark,
+  Braces,
   History,
   LogOut,
+  Monitor,
   Moon,
   Settings,
   Sun,
@@ -27,6 +29,7 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export function AccountMenu() {
   const router = useRouter();
@@ -75,51 +78,83 @@ export function AccountMenu() {
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/search">
-              <FileUp />
-              My Entries
+              <Braces />
+              Entries
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/search">
-              <FolderUp />
-              My Collections
+              <Bookmark />
+              Bookmarks
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/search">
-              <FileHeart />
-              Saved Entries
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/">
-              <Heart />
-              Saved
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/">
               <History />
-              Recent
+              History
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href="/settings">
               <Settings />
               Settings
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={(event) => {
-              event.preventDefault();
-              setTheme(theme === "dark" ? "light" : "dark");
-            }}
-          >
-            <Sun className="scale-100 rotate-0 transition-transform! dark:scale-0 dark:rotate-90" />
-            <Moon className="absolute scale-0 rotate-90 transition-transform! dark:scale-100 dark:rotate-0" />
-            Toggle theme
-          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <Sun
+                className={cn(
+                  "scale-0 transition-transform!",
+                  theme === "light" && "scale-100",
+                )}
+              />
+              <Moon
+                className={cn(
+                  "absolute scale-0 transition-transform!",
+                  theme === "dark" && "scale-100",
+                )}
+              />
+              <Monitor
+                className={cn(
+                  "absolute scale-0 transition-transform!",
+                  theme === "system" && "scale-100",
+                )}
+              />
+              Theme
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault();
+                  setTheme("light");
+                }}
+              >
+                <Sun />
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault();
+                  setTheme("dark");
+                }}
+              >
+                <Moon />
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault();
+                  setTheme("system");
+                }}
+              >
+                <Monitor />
+                System
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut}>
