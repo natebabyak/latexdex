@@ -22,7 +22,7 @@ export default async function Page() {
   return (
     <>
       <Header />
-      <main className="pt-[68px]">
+      <main className="mt-4 pt-[68px]">
         <SearchInput />
         {allEntries.length > 0 ? (
           <div className="grid gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
