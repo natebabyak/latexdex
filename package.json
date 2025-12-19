@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@base-ui/react": "^1.0.0",
     "@codemirror/commands": "^6.10.0",
     "@codemirror/state": "^6.5.2",
     "@codemirror/view": "^6.38.8",
@@ -22,6 +23,7 @@
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
+    "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@uiw/codemirror-themes-all": "^4.25.3",
     "@uiw/react-codemirror": "^4.25.3",
@@ -38,11 +40,13 @@
     "next": "^16.0.10",
     "next-themes": "^0.4.6",
     "pg": "^8.16.3",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
+    "radix-ui": "^1.4.3",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-hook-form": "^7.66.0",
     "react-katex": "^3.1.0",
     "react-resizable-panels": "^3.0.6",
+    "shadcn": "^3.6.2",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.1.12"
   },
