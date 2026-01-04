@@ -1,14 +1,7 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { ModifierKbd } from "@/components/modifier-kbd";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { Kbd, KbdGroup } from "@/components/ui/kbd";
 import { Separator } from "@/components/ui/separator";
-import { Search } from "lucide-react";
+import { HomeInputGroup } from "./home-input-group";
 
 export default function Home() {
   return (
@@ -26,22 +19,11 @@ export default function Home() {
             </p>
           </div>
           <div className="mx-auto grid gap-2">
-            <InputGroup className="mx-auto w-full max-w-sm">
-              <InputGroupAddon align="inline-start">
-                <Search />
-              </InputGroupAddon>
-              <InputGroupInput placeholder="Search..." />
-              <InputGroupAddon align="inline-end">
-                <KbdGroup>
-                  <ModifierKbd />
-                  <Kbd>K</Kbd>
-                </KbdGroup>
-              </InputGroupAddon>
-            </InputGroup>
+            <HomeInputGroup />
           </div>
           <Separator />
           <h2>Scientific Calculator</h2>
-          <p>An </p>
+          <p></p>
           <Separator />
         </article>
       </main>
