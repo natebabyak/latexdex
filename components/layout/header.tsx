@@ -1,16 +1,18 @@
+import { AccountMenu } from "./account-menu";
+import { auth } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import { headers } from "next/headers";
+import { Layers, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { Layers, Plus } from "lucide-react";
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Button } from "@/components/ui/button";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
-import { AccountMenu } from "./account-menu";
 
 export async function Header() {
   const session = await auth.api.getSession({
@@ -35,19 +37,35 @@ export async function Header() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuLink
-                  asChild
-                  className={navigationMenuTriggerStyle()}
-                >
-                  <Link href="/upgrade">Upgrade</Link>
-                </NavigationMenuLink>
+                <NavigationMenuTrigger>Formulas</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid">
+                    <li>
+                      <NavigationMenuLink>
+                        <div></div>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Templates</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid">
+                    <li>
+                      <NavigationMenuLink>
+                        <div></div>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           <Button asChild>
-            <Link href="/new">
-              <Plus />
-              Create
+            <Link href="/upgrade">
+              <Sparkles />
+              Upgrade
             </Link>
           </Button>
         </div>
