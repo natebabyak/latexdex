@@ -9,9 +9,11 @@ import {
 import { Kbd, KbdGroup } from "@/components/ui/kbd";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function HomeInputGroup() {
+  const [value, setValue] = useState("");
+
   const router = useRouter();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,8 +29,8 @@ export function HomeInputGroup() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const route = `/search?q=${e.currentTarget.value}`;
+  const handleSubmit = () => {
+    const route = `/search?q=${encodeURIComponent(value)}`;
     router.replace(route);
   };
 
@@ -38,7 +40,12 @@ export function HomeInputGroup() {
         <InputGroupAddon align="inline-start">
           <Search />
         </InputGroupAddon>
-        <InputGroupInput placeholder="Search..." ref={inputRef} />
+        <InputGroupInput
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="Search..."
+          ref={inputRef}
+          value={value}
+        />
         <InputGroupAddon align="inline-end">
           <KbdGroup>
             <ModifierKbd />
