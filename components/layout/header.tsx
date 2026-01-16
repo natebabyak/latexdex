@@ -26,48 +26,52 @@ export async function Header() {
           <Link href="/">
             <Layers />
           </Link>
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  asChild
-                  className={navigationMenuTriggerStyle()}
-                >
-                  <Link href="/search">Database</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Formulas</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid">
-                    <li>
-                      <NavigationMenuLink>
-                        <div></div>
-                      </NavigationMenuLink>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Templates</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid">
-                    <li>
-                      <NavigationMenuLink>
-                        <div></div>
-                      </NavigationMenuLink>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-          <Button asChild>
-            <Link href="/upgrade">
-              <Sparkles />
-              Upgrade
-            </Link>
-          </Button>
+          {session && (
+            <>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      asChild
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      <Link href="/search">Database</Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Formulas</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid">
+                        <li>
+                          <NavigationMenuLink>
+                            <div></div>
+                          </NavigationMenuLink>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Templates</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid">
+                        <li>
+                          <NavigationMenuLink>
+                            <div></div>
+                          </NavigationMenuLink>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+              <Button asChild>
+                <Link href="/upgrade">
+                  <Sparkles />
+                  Upgrade
+                </Link>
+              </Button>
+            </>
+          )}
         </div>
         {session ? (
           <AccountMenu />
