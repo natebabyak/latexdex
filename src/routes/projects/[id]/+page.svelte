@@ -16,7 +16,7 @@
 
 <Resizable.PaneGroup direction="horizontal">
   <Resizable.Pane>
-    <EditorPane />
+    <EditorPane {project} />
   </Resizable.Pane>
   <Resizable.Handle withHandle />
   <Resizable.Pane>

@@ -13,11 +13,13 @@
 
   import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
   import * as ContextMenu from "#lib/components/ui/context-menu/index.ts";
+  import * as Dialog from "#lib/components/ui/dialog/index.ts";
   import * as InputGroup from "#lib/components/ui/input-group/index.ts";
   import * as Sidebar from "#lib/components/ui/sidebar/index.ts";
   import * as Tabs from "#lib/components/ui/tabs/index.ts";
   import { getProject } from "#lib/projects.remote.ts";
 
+  import CreateProjectFileDialog from "./create-project-file-dialog.svelte";
   import { getActiveFilePath, setActiveFilePath } from "./project.svelte";
 
   type FileTree = {
@@ -89,22 +91,13 @@
         <Sidebar.GroupAction>
           <ChevronDownIcon />
         </Sidebar.GroupAction>
-        <ContextMenu.Root>
-          <ContextMenu.Trigger>
-            {#snippet child({ props })}
-              <Sidebar.GroupContent {...props}>
-                <Sidebar.Menu>
-                  {#each fileTree as node}
-                    {@render Tree({ node })}
-                  {/each}
-                </Sidebar.Menu>
-              </Sidebar.GroupContent>
-            {/snippet}
-          </ContextMenu.Trigger>
-          <ContextMenu.Content>
-            <ContextMenu.Item>New File</ContextMenu.Item>
-          </ContextMenu.Content>
-        </ContextMenu.Root>
+        <Sidebar.GroupContent>
+          <Sidebar.Menu>
+            {#each fileTree as node}
+              {@render Tree({ node })}
+            {/each}
+          </Sidebar.Menu>
+        </Sidebar.GroupContent>
       {:else if tab === "search"}
         <InputGroup.Root>
           <InputGroup.Input />
