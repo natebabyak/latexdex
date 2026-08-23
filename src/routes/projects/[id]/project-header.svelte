@@ -12,10 +12,13 @@
   import * as Avatar from "#lib/components/ui/avatar/index.ts";
   import { Button } from "#lib/components/ui/button/index.ts";
   import * as Command from "#lib/components/ui/command/index.ts";
+  import * as Dialog from "#lib/components/ui/dialog/index.ts";
   import * as Kbd from "#lib/components/ui/kbd/index.ts";
   import * as Menubar from "#lib/components/ui/menubar/index.ts";
   import * as Tooltip from "#lib/components/ui/tooltip/index.ts";
   import type { getProject } from "#lib/projects.remote.ts";
+
+  import CreateProjectFileDialog from "./create-project-file-dialog.svelte";
 
   interface ProjectHeaderProps {
     project: Awaited<ReturnType<typeof getProject>>;
@@ -41,10 +44,16 @@
     <Menubar.Menu>
       <Menubar.Trigger>File</Menubar.Trigger>
       <Menubar.Content>
-        <Menubar.Item>
-          New File
-          <Menubar.Shortcut>&#x2318;N</Menubar.Shortcut>
-        </Menubar.Item>
+        <CreateProjectFileDialog directory={""} projectId={project.id}>
+          <Dialog.Trigger>
+            {#snippet child({ props })}
+              <Menubar.Item {...props} onSelect={(e) => e.preventDefault()}>
+                New File
+                <Menubar.Shortcut>&#x2318;N</Menubar.Shortcut>
+              </Menubar.Item>
+            {/snippet}
+          </Dialog.Trigger>
+        </CreateProjectFileDialog>
         <Menubar.Item>New Folder</Menubar.Item>
       </Menubar.Content>
     </Menubar.Menu>

@@ -11,37 +11,7 @@
 
   let { children }: LayoutProps = $props();
 
-  let sidebarTab = $state(null);
-
   let project = $derived(await getProject({ projectId: page.params.id }));
-
-  type FileTree = {
-    [key: string]: FileTree | null;
-  };
-
-  type TreeNode = [name: string, children: FileTree | null];
-
-  let tree = $derived.by(() => {
-    const root: FileTree = {};
-
-    for (const path of project.files.map((f) => f.path)) {
-      const parts = path.split("/");
-      let current = root;
-
-      parts.forEach((part, index) => {
-        const isFile = index === parts.length - 1;
-
-        if (isFile) {
-          current[part] = current[part] || null;
-        } else {
-          current[part] = current[part] || {};
-          current = current[part];
-        }
-      });
-    }
-
-    return root;
-  });
 </script>
 
 <svelte:head>
@@ -53,7 +23,7 @@
   <Sidebar.Provider class="flex flex-col">
     <ProjectHeader {project} />
     <div class="flex flex-1">
-      <ProjectSidebar />
+      <ProjectSidebar projectId={project.id} />
       <main class="flex-1">
         {@render children()}
       </main>

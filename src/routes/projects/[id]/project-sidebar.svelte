@@ -1,10 +1,12 @@
 <script lang="ts">
   import {
+    ArrowBigDownIcon,
     ChevronDownIcon,
     ChevronRightIcon,
     FileIcon,
     FilesIcon,
     FolderIcon,
+    FolderOpenIcon,
     GitBranchIcon,
     SearchIcon,
   } from "@lucide/svelte";
@@ -14,8 +16,51 @@
   import * as InputGroup from "#lib/components/ui/input-group/index.ts";
   import * as Sidebar from "#lib/components/ui/sidebar/index.ts";
   import * as Tabs from "#lib/components/ui/tabs/index.ts";
+  import { getProject } from "#lib/projects.remote.ts";
+
+  import { getActiveFilePath, setActiveFilePath } from "./project.svelte";
+
+  type FileTree = {
+    name: string;
+    path: string;
+    children?: FileTree[];
+  };
 
   let tab = $state<"explorer" | "search" | "sourceControl">("explorer");
+
+  let { projectId }: { projectId: string } = $props();
+
+  let project = $derived(await getProject({ projectId }));
+
+  let fileTree = $derived.by(() => {
+    const root: FileTree[] = [];
+
+    project.files.forEach(({ path }) => {
+      const parts = path.split("/");
+      let current = root;
+
+      parts.forEach((part, index) => {
+        const isFile = index === parts.length - 1;
+        let node = current.find((node) => node.name === part);
+
+        if (!node) {
+          node = {
+            name: part,
+            path: parts.slice(0, index + 1).join("/"),
+            children: isFile ? undefined : [],
+          };
+
+          current.push(node);
+        }
+
+        if (!isFile && node.children) {
+          current = node.children;
+        }
+      });
+    });
+
+    return root;
+  });
 </script>
 
 <Sidebar.Root
@@ -49,7 +94,7 @@
             {#snippet child({ props })}
               <Sidebar.GroupContent {...props}>
                 <Sidebar.Menu>
-                  {#each Object.entries([]) as node}
+                  {#each fileTree as node}
                     {@render Tree({ node })}
                   {/each}
                 </Sidebar.Menu>
@@ -61,39 +106,43 @@
           </ContextMenu.Content>
         </ContextMenu.Root>
       {:else if tab === "search"}
-        <InputGroup.Root></InputGroup.Root>
+        <InputGroup.Root>
+          <InputGroup.Input />
+        </InputGroup.Root>
       {/if}
     </Sidebar.Group>
   </Sidebar.Content>
 </Sidebar.Root>
 
-{#snippet Tree({ node })}
-  {let [name, children] = node}
-  {#if !children}
+{#snippet Tree({ node }: { node: FileTree })}
+  {#if !node.children}
     <Sidebar.MenuButton
-      isActive={name === "button.svelte"}
-      class="data-[active=true]:bg-transparent"
+      isActive={node.path === getActiveFilePath()}
+      onclick={() => setActiveFilePath(node.path)}
     >
-      <FileIcon />
-      {name}
+      {#if node.name.endsWith(".md")}
+        <ArrowBigDownIcon />
+      {:else}
+        <FileIcon />
+      {/if}
+      {node.name}
     </Sidebar.MenuButton>
   {:else}
     <Sidebar.MenuItem>
-      <Collapsible.Root
-        class="group/collapsible [&[data-state=open]>button>svg:first-child]:rotate-90"
-      >
+      <Collapsible.Root class="group">
         <Collapsible.Trigger>
           {#snippet child({ props })}
             <Sidebar.MenuButton {...props}>
-              <ChevronRightIcon class="transition-transform" />
-              <FolderIcon />
-              {name}
+              <ChevronRightIcon class="group-data-[state=open]:rotate-90" />
+              <FolderIcon class="group-data-[state=open]:hidden" />
+              <FolderOpenIcon class="not-group-data-[state=open]:hidden" />
+              {node.name}
             </Sidebar.MenuButton>
           {/snippet}
         </Collapsible.Trigger>
         <Collapsible.Content>
           <Sidebar.MenuSub>
-            {#each Object.entries(children) as subNode}
+            {#each node.children as subNode}
               {@render Tree({ node: subNode })}
             {/each}
           </Sidebar.MenuSub>

@@ -160,6 +160,7 @@ export const createProjectFile = command(
     });
 
     await getProjects().refresh();
+    await getProject({ projectId }).refresh();
   },
 );
 
