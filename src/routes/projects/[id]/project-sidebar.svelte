@@ -1,93 +1,70 @@
 <script lang="ts">
   import {
+    ChevronDownIcon,
     ChevronRightIcon,
     FileIcon,
+    FilesIcon,
     FolderIcon,
-    FolderOpenIcon,
     GitBranchIcon,
     SearchIcon,
-    type LucideIcon,
   } from "@lucide/svelte";
 
   import * as Collapsible from "#lib/components/ui/collapsible/index.ts";
   import * as ContextMenu from "#lib/components/ui/context-menu/index.ts";
+  import * as InputGroup from "#lib/components/ui/input-group/index.ts";
   import * as Sidebar from "#lib/components/ui/sidebar/index.ts";
+  import * as Tabs from "#lib/components/ui/tabs/index.ts";
 
-  import SettingsDialog from "./settings-dialog.svelte";
-  import { getTab, setTab, type Tab } from "./tab.svelte";
-
-  const TABS = [
-    {
-      Icon: FolderIcon,
-      label: "Files",
-      value: "files",
-    },
-    {
-      Icon: GitBranchIcon,
-      label: "Source Control",
-      value: "sourceControl",
-    },
-  ] satisfies Array<{
-    Icon: LucideIcon;
-    label: string;
-    value: Tab;
-  }>;
+  let tab = $state<"explorer" | "search" | "sourceControl">("explorer");
 </script>
 
 <Sidebar.Root
-  collapsible="icon"
-  class="top-(--header-height) h-[calc(100vh-var(--footer-height)-var(--header-height))] overflow-hidden *:data-[sidebar=sidebar]:flex-row"
+  collapsible="offcanvas"
+  class="top-(--header-height) h-[calc(100vh-var(--footer-height)-var(--header-height))]"
 >
-  <Sidebar.Root collapsible="none" class="w-[calc(var(--sidebar-width-icon)+1px)] border-e">
+  <Sidebar.Content>
     <Sidebar.Header>
-      <Sidebar.Menu>
-        {#each TABS as { Icon, label, value }}
-          <Sidebar.MenuItem>
-            <Sidebar.MenuButton
-              isActive={value === getTab()}
-              onclick={() => setTab(value)}
-              tooltipContentProps={{ hidden: false }}
-              class="data-active:bg-primary data-active:text-primary-foreground"
-            >
-              {#snippet tooltipContent()}
-                {label}
-              {/snippet}
-              <Icon />
-            </Sidebar.MenuButton>
-          </Sidebar.MenuItem>
-        {/each}
-      </Sidebar.Menu>
+      <Tabs.Root bind:value={tab} class="mx-auto">
+        <Tabs.List>
+          <Tabs.Trigger value="explorer">
+            <FilesIcon />
+          </Tabs.Trigger>
+          <Tabs.Trigger value="search">
+            <SearchIcon />
+          </Tabs.Trigger>
+          <Tabs.Trigger value="sourceControl">
+            <GitBranchIcon />
+          </Tabs.Trigger>
+        </Tabs.List>
+      </Tabs.Root>
     </Sidebar.Header>
-    <Sidebar.Content />
-    <Sidebar.Footer>
-      <SettingsDialog />
-    </Sidebar.Footer>
-  </Sidebar.Root>
-  <Sidebar.Root collapsible="none" class="flex-1">
-    <Sidebar.Content>
-      <Sidebar.Group>
-        {#if getTab() === "files"}
-          <Sidebar.GroupLabel>Files</Sidebar.GroupLabel>
-          <ContextMenu.Root>
-            <ContextMenu.Trigger>
-              {#snippet child({ props })}
-                <Sidebar.GroupContent {...props}>
-                  <Sidebar.Menu>
-                    {#each Object.entries([]) as node}
-                      {@render Tree({ node })}
-                    {/each}
-                  </Sidebar.Menu>
-                </Sidebar.GroupContent>
-              {/snippet}
-            </ContextMenu.Trigger>
-            <ContextMenu.Content>
-              <ContextMenu.Item>New File</ContextMenu.Item>
-            </ContextMenu.Content>
-          </ContextMenu.Root>
-        {/if}
-      </Sidebar.Group>
-    </Sidebar.Content>
-  </Sidebar.Root>
+    <Sidebar.Group>
+      {#if tab === "explorer"}
+        <Sidebar.GroupLabel>Files</Sidebar.GroupLabel>
+        <Sidebar.GroupAction>
+          <ChevronDownIcon />
+        </Sidebar.GroupAction>
+        <ContextMenu.Root>
+          <ContextMenu.Trigger>
+            {#snippet child({ props })}
+              <Sidebar.GroupContent {...props}>
+                <Sidebar.Menu>
+                  {#each Object.entries([]) as node}
+                    {@render Tree({ node })}
+                  {/each}
+                </Sidebar.Menu>
+              </Sidebar.GroupContent>
+            {/snippet}
+          </ContextMenu.Trigger>
+          <ContextMenu.Content>
+            <ContextMenu.Item>New File</ContextMenu.Item>
+          </ContextMenu.Content>
+        </ContextMenu.Root>
+      {:else if tab === "search"}
+        <InputGroup.Root></InputGroup.Root>
+      {/if}
+    </Sidebar.Group>
+  </Sidebar.Content>
 </Sidebar.Root>
 
 {#snippet Tree({ node })}

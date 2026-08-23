@@ -8,6 +8,7 @@
         "@better-auth/drizzle-adapter": "^1.7.0-rc.5",
         "@better-auth/stripe": "^1.6.27",
         "@iconify-svelte/bxl": "^1.0.3",
+        "@iconify-svelte/catppuccin": "^1.0.2",
         "@tanstack/svelte-form": "^1.33.5",
         "@tanstack/svelte-table": "^9.1.2",
         "better-auth": "^1.7.0-rc.5",
@@ -239,6 +240,8 @@
     "@fontsource-variable/inter": ["@fontsource-variable/inter@5.3.0", "", {}, "sha512-OupL48va4JNofb97w6NYeF9S7W/kHNKM0Er8Dem5nqi4jeOLrVJDoE8tZEpnMJmtkvNbB1EIPPwHcdkF6b1oUA=="],
 
     "@iconify-svelte/bxl": ["@iconify-svelte/bxl@1.0.3", "", { "dependencies": { "@iconify/css-svelte": "^1.0.0" } }, "sha512-GoVimItFgurwAG5HmOvjZD8/I7HCYXrKAIWOXmZ6yojRqE71NG+t9OW2v5LACEzw622mMyqqsKaPY/7xrve57w=="],
+
+    "@iconify-svelte/catppuccin": ["@iconify-svelte/catppuccin@1.0.2", "", { "dependencies": { "@iconify/css-svelte": "^1.0.0" } }, "sha512-8+oVTJfDxOoI3u5WcldueA63l6eegK2yJquFCsc7BbPhOWrXMDcKf8L7S6I4GSmX0hN5K7oNDhbn7rIawaa8mg=="],
 
     "@iconify/css-svelte": ["@iconify/css-svelte@1.0.1", "", { "dependencies": { "@iconify/types": "^2.0.0" }, "peerDependencies": { "svelte": ">4.0.0" } }, "sha512-f9w1anXXBm48VjDEWDrGTybdiwnDTIChcUpBK/UtXR/AhNp/Co/VPp00t7dO93j+4Je0OwMKyc/HvI7Lpv3PKg=="],
 

@@ -61,6 +61,7 @@
     "@better-auth/drizzle-adapter": "^1.7.0-rc.5",
     "@better-auth/stripe": "^1.6.27",
     "@iconify-svelte/bxl": "^1.0.3",
+    "@iconify-svelte/catppuccin": "^1.0.2",
     "@tanstack/svelte-form": "^1.33.5",
     "@tanstack/svelte-table": "^9.1.2",
     "better-auth": "^1.7.0-rc.5",
