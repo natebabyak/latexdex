@@ -4,13 +4,9 @@
 // see the documentation: https://zed.dev/docs/configuring-zed#settings-files
 {
   "format_on_save": "on",
-  "languages": {
-    "Svelte": {
-      "formatter": {
-        "language_server": {
-          "name": "oxfmt"
-        }
-      }
+  "formatter": {
+    "language_server": {
+      "name": "oxfmt"
     }
   }
 }
